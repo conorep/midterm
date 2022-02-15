@@ -8,18 +8,28 @@ quizquestions.html
 
     <form action="#" method="post">
         
-        <label>Name  <input type="text" name="name"></label>
+        <label>Name  <input type="text" name="name" value="{{ @name }}"></label>
+        <!--display error if there is one -->
+        <check if="{{ isset(@errors['name']) }}">
+            <p class="err">{{ @errors['name'] }}</p>
+        </check>
         
-        <br><br>
+        <br>
         
         <p class="ml-5">Check all that apply:</p>
     
         <repeat group="{{ @questions }}" value="{{ @question }}">
             <div class="justify-content-between">
-                <input type="checkbox" class="mr-2" id="{{ @question }}" name="questions[]" value="{{ @question }}" >{{ @question }}
+                <input type="checkbox" class="mr-2" id="{{ @question }}" name="questions[]" value="{{ @question }}">{{ @question }}
                 <label class="" for="{{ @question }}"></label>
             </div>
         </repeat>
+
+        <!--display error if there is one -->
+        <check if="{{ isset(@errors['questions']) }}">
+            <span class="err">{{ @errors['questions'] }}</span>
+        </check>
+        
     
         <!-- submit btn -->
         <div class="pt-2 mr-5 w-100 ">

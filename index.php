@@ -23,17 +23,48 @@ $f3->route('GET /', function()
 
 $f3->route('GET|POST /survey', function($f3)
 {
+    //blank var for sticky question
+    $surveyName = "";
+
+    $f3->set('questions', getQuestions());
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        $_SESSION['surveyName'] = $_POST['name'];
-        $_SESSION['surveyQuestions'] = implode(", ", $_POST['questions']);
+        $surveyName = $_POST['name'];
+        //validate!
+        if(validName($surveyName))
+        {
+            $_SESSION['surveyName'] = $surveyName;
+        }
+        else
+        {
+            $f3->set('errors["name"]', "Please enter your name.");
+        }
 
-        //redirect user to next page
-        $f3->reroute('complete');
+        if(isset($_POST['questions']))
+        {
+            $surveyQuestions = $_POST['questions'];
+            if(validAnswer($surveyQuestions))
+            {
+                $_SESSION['surveyQuestions'] = implode(", ", $surveyQuestions);
+            }
+            else
+            {
+                $f3->set('errors["questions"]', "Please enter valid answers.");
+            }
+
+        } else{
+            $f3->set('errors["questions"]', "Please select at least one answer.");
+        }
+
+        //redirect user to next page if no errors
+        if(empty($f3->get('errors')))
+        {
+            $f3->reroute('complete');
+        }
     }
 
-    $f3->set('questions', array('I was surprised that this was no standard quiz', 'I like fat free',
-        'Today is for sure Monday', 'My cat is on my keyboard currentltljdfj'));
+    $f3->set('name', $surveyName);
 
     $views = new Template();
     echo $views->render('views/quizquestions.html');
