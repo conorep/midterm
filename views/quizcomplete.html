@@ -5,7 +5,11 @@ quizcomplete.html
 -->
 
 <include href="includes/header.html"></include>
+    
+    <h3>Thank you for taking the survey, {{ @SESSION.surveyName }}!</h3>
 
+    <h4>Your answers:</h4>
+    <p>{{ @SESSION.surveyQuestions }}</p>
 
 
 

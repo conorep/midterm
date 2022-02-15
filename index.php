@@ -21,12 +21,17 @@ $f3->route('GET /', function()
     echo $views->render('views/quizhome.html');
 });
 
-$f3->route('GET /survey', function($f3)
+$f3->route('GET|POST /survey', function($f3)
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
+        $_SESSION['surveyName'] = $_POST['name'];
+        $_SESSION['surveyQuestions'] = implode(", ", $_POST['questions']);
 
+        //redirect user to next page
+        $f3->reroute('complete');
     }
+
     $f3->set('questions', array('I was surprised that this was no standard quiz', 'I like fat free',
         'Today is for sure Monday', 'My cat is on my keyboard currentltljdfj'));
 
