@@ -21,8 +21,15 @@ $f3->route('GET /', function()
     echo $views->render('views/quizhome.html');
 });
 
-$f3->route('GET /quiz', function()
+$f3->route('GET /survey', function($f3)
 {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+
+    }
+    $f3->set('questions', array('I was surprised that this was no standard quiz', 'I like fat free',
+        'Today is for sure Monday', 'My cat is on my keyboard currentltljdfj'));
+
     $views = new Template();
     echo $views->render('views/quizquestions.html');
 });

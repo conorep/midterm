@@ -1,0 +1,32 @@
+<!--
+Conor
+SDEV328 AMD
+quizquestions.html
+-->
+
+<include href="includes/header.html"></include>
+
+    <form action="#" method="post">
+        
+        <label>Name  <input type="text" name="name"></label>
+        
+        <br><br>
+        
+        <p class="ml-5">Check all that apply:</p>
+    
+        <repeat group="{{ @questions }}" value="{{ @question }}">
+            <div class="justify-content-between">
+                <input type="checkbox" class="mr-2" id="{{ @question }}" name="questions[]" value="{{ @question }}" >{{ @question }}
+                <label class="" for="{{ @question }}"></label>
+            </div>
+        </repeat>
+    
+        <!-- submit btn -->
+        <div class="pt-2 mr-5 w-100 ">
+            <button class="btn btn-primary ml-5 mt-3" type="submit">Submit</button>
+        </div>
+        
+    </form>
+
+</body>
+</html>
